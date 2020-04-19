@@ -7,9 +7,13 @@ package punto.de.venta.java;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,14 +21,34 @@ import javax.swing.Timer;
  */
 public class Interfaz extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Interfaz
-     */
+    private String arre[] = new String[4];
+     DefaultTableModel model;
+     String precio = "", producto = "", cantidad = "", total = "";
     public Interfaz() {
         initComponents();
         Fecha.start();
+        arre[1] = "Taco-de-asada 30";
+        arre[2] = "Dogo 20";
+        arre[3] = "Caramelo 40";
+       model = (DefaultTableModel) tabla.getModel();
+       
     }
-    
+    private static boolean isNumeric(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+    private void calculaTotal(){
+        int aux = 0;
+        int col = tabla.getRowCount();
+        for (int i = 0; i < col; i++) {
+            aux = aux + Integer.parseInt((String) tabla.getValueAt(i, 3));
+        }
+        tot.setText(aux + "");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,10 +61,11 @@ public class Interfaz extends javax.swing.JFrame {
         tiempo = new javax.swing.JLabel();
         Titulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         Entrada = new javax.swing.JTextField();
-        Total = new javax.swing.JLabel();
+        Tot = new javax.swing.JLabel();
         Date = new javax.swing.JLabel();
+        tot = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,18 +75,32 @@ public class Interfaz extends javax.swing.JFrame {
         Titulo.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         Titulo.setText("Sistema Punto de Venta");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Precio", "Producto", "Cantidad", "Total"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
 
-        Total.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        Total.setText("Total=");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabla);
+
+        Entrada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                EntradaKeyPressed(evt);
+            }
+        });
+
+        Tot.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        Tot.setText("Total=");
 
         Date.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         Date.setText("DD:MM:YY");
@@ -74,7 +113,10 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Tot)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tot, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(Date)
@@ -99,13 +141,34 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Tot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tot, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(65, 65, 65))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void EntradaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EntradaKeyPressed
+       
+        int key = evt.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            String[] op = Entrada.getText().split("\\*");
+            if(isNumeric(op[0]) && isNumeric(op[1])){
+                int pro = Integer.parseInt(op[1]);
+                String prod[] = arre[pro].split(" ");
+                precio = prod[1];
+                producto = prod[0];
+                cantidad = op[0];
+                total = (Integer.parseInt(op[0]) * Integer.parseInt(prod[1])) + "";
+                model.addRow(new Object[]{precio,producto,cantidad,total});
+                calculaTotal();
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe introducir un número de producto");
+            }
+        }
+    }//GEN-LAST:event_EntradaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -157,9 +220,11 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel Date;
     private javax.swing.JTextField Entrada;
     private javax.swing.JLabel Titulo;
-    private javax.swing.JLabel Total;
+    private javax.swing.JLabel Tot;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabla;
     private javax.swing.JLabel tiempo;
+    private javax.swing.JLabel tot;
     // End of variables declaration//GEN-END:variables
+
 }
