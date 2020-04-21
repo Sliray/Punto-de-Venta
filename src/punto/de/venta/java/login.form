@@ -166,7 +166,7 @@
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\sebas\OneDrive\Documentos\NetBeansProjects\Punto de venta java\24903_opt.png"/>
+          <Image iconType="3" name="/Imagenes/24903_opt.png"/>
         </Property>
       </Properties>
       <Constraints>
@@ -178,7 +178,7 @@
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\sebas\OneDrive\Documentos\NetBeansProjects\Punto de venta java\login.PNG"/>
+          <Image iconType="3" name="/Imagenes/login.PNG"/>
         </Property>
         <Property name="text" type="java.lang.String" value="jLabel4"/>
       </Properties>

@@ -127,11 +127,11 @@ public class login extends javax.swing.JFrame {
         getContentPane().add(salir);
         salir.setBounds(380, 300, 70, 25);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\sebas\\OneDrive\\Documentos\\NetBeansProjects\\Punto de venta java\\24903_opt.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/24903_opt.png"))); // NOI18N
         getContentPane().add(jLabel5);
         jLabel5.setBounds(390, 10, 70, 40);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\sebas\\OneDrive\\Documentos\\NetBeansProjects\\Punto de venta java\\login.PNG")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/login.PNG"))); // NOI18N
         jLabel4.setText("jLabel4");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(0, 0, 480, 350);
@@ -175,7 +175,7 @@ public class login extends javax.swing.JFrame {
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         // TODO add your handling code here:
-        
+        System.exit(0);
     }//GEN-LAST:event_salirActionPerformed
 
     private void registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarActionPerformed

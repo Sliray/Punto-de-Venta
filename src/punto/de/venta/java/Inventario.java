@@ -109,7 +109,7 @@ public class Inventario extends javax.swing.JFrame {
         jLabel1.setText("Inventario");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 10, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\sebas\\OneDrive\\Documentos\\NetBeansProjects\\Punto de venta java\\Fondo.jpg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 430));
 
         pack();
