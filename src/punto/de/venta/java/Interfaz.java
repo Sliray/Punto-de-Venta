@@ -5,6 +5,7 @@
  */
 package punto.de.venta.java;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -26,6 +27,7 @@ public class Interfaz extends javax.swing.JFrame {
      String precio = "", producto = "", cantidad = "", total = "";
     public Interfaz() {
         initComponents();
+        //tabla.setBackground(Color.white);
         Fecha.start();
         arre[1] = "Taco-de-asada 30";
         arre[2] = "Dogo 20";
@@ -66,15 +68,22 @@ public class Interfaz extends javax.swing.JFrame {
         Tot = new javax.swing.JLabel();
         Date = new javax.swing.JLabel();
         tot = new javax.swing.JLabel();
+        fondoInterfaz = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tiempo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tiempo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tiempo.setForeground(new java.awt.Color(255, 255, 255));
         tiempo.setText("00:00:00");
+        getContentPane().add(tiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 70, -1));
 
-        Titulo.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Titulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Titulo.setForeground(new java.awt.Color(255, 255, 255));
         Titulo.setText("Sistema Punto de Venta");
+        getContentPane().add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 350, -1));
 
+        tabla.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -91,61 +100,34 @@ public class Interfaz extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tabla.setInheritsPopupMenu(true);
+        tabla.setSelectionBackground(new java.awt.Color(255, 51, 51));
         jScrollPane1.setViewportView(tabla);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 72, 640, 585));
 
         Entrada.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 EntradaKeyPressed(evt);
             }
         });
+        getContentPane().add(Entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 663, 385, 35));
 
-        Tot.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        Tot.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Tot.setText("Total=");
+        getContentPane().add(Tot, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 670, 60, -1));
 
-        Date.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Date.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Date.setForeground(new java.awt.Color(255, 255, 255));
         Date.setText("DD:MM:YY");
+        getContentPane().add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Tot)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tot, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(Date)
-                .addGap(18, 18, 18)
-                .addComponent(tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(Titulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Tot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tot, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65))
-        );
+        tot.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(tot, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 670, 70, 20));
+
+        fondoInterfaz.setIcon(new javax.swing.ImageIcon("C:\\Users\\sebas\\OneDrive\\Documentos\\NetBeansProjects\\Punto de venta java\\Fondo.jpg")); // NOI18N
+        fondoInterfaz.setText("jLabel1");
+        getContentPane().add(fondoInterfaz, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 4, 640, 760));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -221,6 +203,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTextField Entrada;
     private javax.swing.JLabel Titulo;
     private javax.swing.JLabel Tot;
+    private javax.swing.JLabel fondoInterfaz;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabla;
     private javax.swing.JLabel tiempo;

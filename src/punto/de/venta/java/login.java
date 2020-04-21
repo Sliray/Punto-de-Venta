@@ -7,6 +7,7 @@ package punto.de.venta.java;
 
 import conexion.conexion;
 import conexion.consultas;
+import java.awt.Color;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,8 +26,12 @@ public class login extends javax.swing.JFrame {
     Connection conn = poss.conexion();
     consultas c = new consultas();
     Interfaz in = new Interfaz();
+    
     public login() {
         initComponents();
+        entrar.setBackground(Color.BLACK);
+        salir.setBackground(Color.red);
+        registrar.setBackground(Color.BLACK);
     }
 
     /**
@@ -46,89 +51,90 @@ public class login extends javax.swing.JFrame {
         entrar = new javax.swing.JButton();
         registrar = new javax.swing.JButton();
         salir = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(490, 378));
+        getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Acceso al sistema");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(130, 20, 220, 29);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Usuario:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(60, 90, 90, 20);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Contraseña:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(60, 140, 120, 14);
 
+        user.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userActionPerformed(evt);
             }
         });
+        getContentPane().add(user);
+        user.setBounds(200, 81, 160, 30);
 
+        pass.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passActionPerformed(evt);
             }
         });
+        getContentPane().add(pass);
+        pass.setBounds(200, 131, 160, 30);
 
-        entrar.setText("Entrar");
+        entrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        entrar.setForeground(new java.awt.Color(255, 255, 255));
+        entrar.setText("Ingresar");
         entrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 entrarActionPerformed(evt);
             }
         });
+        getContentPane().add(entrar);
+        entrar.setBounds(250, 230, 110, 30);
 
+        registrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        registrar.setForeground(new java.awt.Color(255, 255, 255));
         registrar.setText("Registrar ");
+        registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(registrar);
+        registrar.setBounds(80, 230, 120, 30);
 
+        salir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        salir.setForeground(new java.awt.Color(255, 255, 255));
         salir.setText("Salir");
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(salir);
+        salir.setBounds(380, 300, 70, 25);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(pass))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(30, 30, 30)
-                                .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 47, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(salir)
-                        .addGap(18, 18, 18)
-                        .addComponent(registrar)
-                        .addGap(18, 18, 18)
-                        .addComponent(entrar)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(registrar)
-                    .addComponent(salir)
-                    .addComponent(entrar))
-                .addContainerGap())
-        );
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\sebas\\OneDrive\\Documentos\\NetBeansProjects\\Punto de venta java\\24903_opt.png")); // NOI18N
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(390, 10, 70, 40);
+
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\sebas\\OneDrive\\Documentos\\NetBeansProjects\\Punto de venta java\\login.PNG")); // NOI18N
+        jLabel4.setText("jLabel4");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(0, 0, 480, 350);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -144,7 +150,7 @@ public class login extends javax.swing.JFrame {
     private void entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarActionPerformed
         String usuario = user.getText();
         String contra = pass.getText();
-        
+       
         String query = "select user_name, user_pass from usuario "
                 + "where user_name = '"+usuario +"' and user_pass = '"+contra+"'";    
         
@@ -166,6 +172,15 @@ public class login extends javax.swing.JFrame {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_entrarActionPerformed
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_salirActionPerformed
+
+    private void registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,6 +222,8 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField pass;
     private javax.swing.JButton registrar;
     private javax.swing.JButton salir;
