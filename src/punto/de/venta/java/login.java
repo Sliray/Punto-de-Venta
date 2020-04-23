@@ -127,9 +127,9 @@ public class login extends javax.swing.JFrame {
         getContentPane().add(salir);
         salir.setBounds(380, 300, 70, 25);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/24903_opt.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Pc Master.png"))); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(390, 10, 70, 40);
+        jLabel5.setBounds(10, 10, 80, 70);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/login.PNG"))); // NOI18N
         jLabel4.setText("jLabel4");
@@ -151,6 +151,11 @@ public class login extends javax.swing.JFrame {
         String usuario = user.getText();
         String contra = pass.getText();
        
+        if (user.getText().isEmpty()||pass.getText().isEmpty()) {
+            System.out.println("No hay datos");
+            JOptionPane.showMessageDialog(null, "Introduzca el Usuario y/o contraseña");
+            
+        }else{
         String query = "select user_name, user_pass from usuario "
                 + "where user_name = '"+usuario +"' and user_pass = '"+contra+"'";    
         
@@ -170,6 +175,7 @@ public class login extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }//GEN-LAST:event_entrarActionPerformed
 

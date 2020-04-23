@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -35,6 +36,7 @@ public class Interfaz extends javax.swing.JFrame {
     String nombre = "", marca = "", descripcion = "", precio = "", cantidad = "";
     conexion poss = new conexion();
     Connection conn = poss.conexion();
+    ResultSet resultSet = null;
     public Interfaz() {
         initComponents();
         //tabla.setBackground(Color.white);
@@ -151,20 +153,54 @@ public class Interfaz extends javax.swing.JFrame {
             if (prod.contains("*")) {
                 String arre[] = prod.split("\\*");
                 if (isNumeric(arre[0]) && isNumeric(arre[1])) {
-                    String query = "select nombre, marca, descripcion, precio\n"
-                            + "from producto\n"
-                            + "where id = "+arre[1];
                     try {
-                        Statement st = conn.createStatement();
-                        ResultSet rs = st.executeQuery(query);
-                        rs.next();
-                        nombre = rs.getString(1);
-                        marca = rs.getString(2);
-                        descripcion = rs.getString(3);
-                        precio = rs.getFloat(4)+"";
-                        cantidad = arre[0];
-                        model.addRow(new Object[]{nombre,marca,descripcion,precio,cantidad});
-                        calculaTotal();
+                        String query = "select nombre, marca, descripcion, precio\n"
+                                + "from producto\n"
+                                + "where id = "+arre[1];
+                        
+                        String SQL1 = "SELECT * FROM producto where id = "+ arre[1];
+                        String[] datos = new String[6];
+                        PreparedStatement pst = conn.prepareStatement(SQL1);
+                        resultSet = pst.executeQuery();
+                        
+                        while (resultSet.next()) {
+                            
+                            datos[5] = resultSet.getString(6);
+                            System.out.println(datos[5]);
+                            
+                        }
+                        if (Integer.parseInt(datos[5])< Integer.parseInt(arre[0])) {
+                            JOptionPane.showMessageDialog(null, "No hay suficientes unidades de este producto");
+                        }else{
+                            
+                        
+                        try {
+                            Statement st = conn.createStatement();
+                            ResultSet rs = st.executeQuery(query);
+                            rs.next();
+                            nombre = rs.getString(1);
+                            marca = rs.getString(2);
+                            descripcion = rs.getString(3);
+                            precio = rs.getFloat(4)+"";
+                            cantidad = arre[0];
+                            model.addRow(new Object[]{nombre,marca,descripcion,precio,cantidad});
+                            calculaTotal();
+                            String SQL = "UPDATE producto SET id=?,nombre=?,descripcion=?,marca=?,precio=?,existencia=? where id = "+ arre[1];
+                            PreparedStatement pst1 = conn.prepareStatement(SQL);
+                            pst1 = conn.prepareStatement(SQL);
+                            pst1.setInt(1, Integer.parseInt(arre[1]));
+                            pst1.setString(2, nombre);
+                            pst1.setString(3, descripcion);
+                            pst1.setString(4, marca);
+                            pst1.setDouble(5, Double.parseDouble(precio));
+                            pst1.setInt(6, (Integer.parseInt(datos[5]) - Integer.parseInt(cantidad)));
+                            pst1.executeUpdate();
+                            
+                            System.out.println("Registro exitoso");
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -172,10 +208,29 @@ public class Interfaz extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Entrada no válida, no introdujo cantidad de producto y/o código de producto");
                 }
             }else if(isNumeric(prod)){
-                String query = "select nombre, marca, descripcion, precio\n"
+                try {
+                    String query = "select nombre, marca, descripcion, precio\n"
                             + "from producto\n"
                             + "where id = "+prod;
-                try {
+                    
+                    
+                    String SQL1 = "SELECT * FROM producto where id = "+ prod;
+                    String[] datos = new String[6];
+                    PreparedStatement pst = conn.prepareStatement(SQL1);
+                    resultSet = pst.executeQuery();
+                    while (resultSet.next()) {
+                        
+                        datos[5] = resultSet.getString(6);
+                        System.out.println(datos[5]);
+                        
+                    }
+                    if (Integer.parseInt(datos[5])<1) {
+                             JOptionPane.showMessageDialog(null, "No hay mas unidades de este producto");
+                    }else{
+                        
+                    
+                    System.out.println("Registro exitoso");
+                    try {
                         Statement st = conn.createStatement();
                         ResultSet rs = st.executeQuery(query);
                         rs.next();
@@ -186,9 +241,25 @@ public class Interfaz extends javax.swing.JFrame {
                         cantidad = 1+"";
                         model.addRow(new Object[]{nombre,marca,descripcion,precio,cantidad});
                         calculaTotal();
+                        String SQL = "UPDATE producto SET id=?,nombre=?,descripcion=?,marca=?,precio=?,existencia=? where id = "+ prod;
+                        PreparedStatement pst1 = conn.prepareStatement(SQL);
+                        pst1 = conn.prepareStatement(SQL);
+                        pst1.setInt(1, Integer.parseInt(prod));
+                        pst1.setString(2, nombre);
+                        pst1.setString(3, descripcion);
+                        pst1.setString(4, marca);
+                        pst1.setDouble(5, Double.parseDouble(precio));
+                        pst1.setInt(6,(Integer.parseInt(datos[5])- Integer.parseInt(cantidad)));
+                        pst1.executeUpdate();
+                        System.out.println("Registro exitoso");
+                    
                     } catch (SQLException ex) {
                         Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }} catch (SQLException ex) {
+                        Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                
             }else{
                 JOptionPane.showMessageDialog(null, "Entrada no válida");
             }
