@@ -5,13 +5,21 @@
  */
 package punto.de.venta.java;
 
+import conexion.conexion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
@@ -23,18 +31,19 @@ import javax.swing.table.DefaultTableModel;
 public class Interfaz extends javax.swing.JFrame {
 
     private String arre[] = new String[4];
-     DefaultTableModel model;
-     String precio = "", producto = "", cantidad = "", total = "";
+    DefaultTableModel model;
+    String nombre = "", marca = "", descripcion = "", precio = "", cantidad = "";
+    conexion poss = new conexion();
+    Connection conn = poss.conexion();
     public Interfaz() {
         initComponents();
         //tabla.setBackground(Color.white);
         Fecha.start();
-        arre[1] = "Taco-de-asada 30";
-        arre[2] = "Dogo 20";
-        arre[3] = "Caramelo 40";
-       model = (DefaultTableModel) tabla.getModel();
-       
+        this.setResizable(false);
+        model = (DefaultTableModel) tabla.getModel();
+
     }
+
     private static boolean isNumeric(String cadena) {
         try {
             Integer.parseInt(cadena);
@@ -43,14 +52,16 @@ public class Interfaz extends javax.swing.JFrame {
             return false;
         }
     }
-    private void calculaTotal(){
-        int aux = 0;
+
+    private void calculaTotal() {
+        Double aux = 0.0;
         int col = tabla.getRowCount();
         for (int i = 0; i < col; i++) {
-            aux = aux + Integer.parseInt((String) tabla.getValueAt(i, 3));
+            aux = aux + (Double.parseDouble((String) tabla.getValueAt(i, 3))* Double.parseDouble((String) tabla.getValueAt(i, 4)));
         }
         tot.setText(aux + "");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,11 +100,11 @@ public class Interfaz extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Precio", "Producto", "Cantidad", "Total"
+                "Producto", "Marca", "Descripcion", "Precio", "Cantidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -133,21 +144,53 @@ public class Interfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EntradaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EntradaKeyPressed
-       
+
         int key = evt.getKeyCode();
         if (key == KeyEvent.VK_ENTER) {
-            String[] op = Entrada.getText().split("\\*");
-            if(isNumeric(op[0]) && isNumeric(op[1])){
-                int pro = Integer.parseInt(op[1]);
-                String prod[] = arre[pro].split(" ");
-                precio = prod[1];
-                producto = prod[0];
-                cantidad = op[0];
-                total = (Integer.parseInt(op[0]) * Integer.parseInt(prod[1])) + "";
-                model.addRow(new Object[]{precio,producto,cantidad,total});
-                calculaTotal();
+            String prod = Entrada.getText();
+            if (prod.contains("*")) {
+                String arre[] = prod.split("\\*");
+                if (isNumeric(arre[0]) && isNumeric(arre[1])) {
+                    String query = "select nombre, marca, descripcion, precio\n"
+                            + "from producto\n"
+                            + "where id = "+arre[1];
+                    try {
+                        Statement st = conn.createStatement();
+                        ResultSet rs = st.executeQuery(query);
+                        rs.next();
+                        nombre = rs.getString(1);
+                        marca = rs.getString(2);
+                        descripcion = rs.getString(3);
+                        precio = rs.getFloat(4)+"";
+                        cantidad = arre[0];
+                        model.addRow(new Object[]{nombre,marca,descripcion,precio,cantidad});
+                        calculaTotal();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Entrada no válida, no introdujo cantidad de producto y/o código de producto");
+                }
+            }else if(isNumeric(prod)){
+                String query = "select nombre, marca, descripcion, precio\n"
+                            + "from producto\n"
+                            + "where id = "+prod;
+                try {
+                        Statement st = conn.createStatement();
+                        ResultSet rs = st.executeQuery(query);
+                        rs.next();
+                        nombre = rs.getString(1);
+                        marca = rs.getString(2);
+                        descripcion = rs.getString(3);
+                        precio = rs.getFloat(4)+"";
+                        cantidad = 1+"";
+                        model.addRow(new Object[]{nombre,marca,descripcion,precio,cantidad});
+                        calculaTotal();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                    }
             }else{
-                JOptionPane.showMessageDialog(null, "Debe introducir un número de producto");
+                JOptionPane.showMessageDialog(null, "Entrada no válida");
             }
         }
     }//GEN-LAST:event_EntradaKeyPressed
@@ -155,9 +198,9 @@ public class Interfaz extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    SimpleDateFormat date1= new SimpleDateFormat("dd/MM/YYYY");
+    SimpleDateFormat date1 = new SimpleDateFormat("dd/MM/YYYY");
     SimpleDateFormat tiempo1 = new SimpleDateFormat("H:mm:ss");
-    
+
     Timer Fecha = new Timer(1000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -165,7 +208,7 @@ public class Interfaz extends javax.swing.JFrame {
             Date.setText(date1.format(new Date()));
         }
     });
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
