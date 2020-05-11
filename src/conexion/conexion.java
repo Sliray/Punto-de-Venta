@@ -14,19 +14,20 @@ import java.sql.DriverManager;
  */
 public class conexion {
 
-    public String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    public String bd = "punto_venta";
-    public String host = "puntoventa.c58jsqn1ty9x.us-east-1.rds.amazonaws.com";
-    public String port = "1433";
-    public String user = "admin";
-    public String pass = "admin123";
-    public String url = "jdbc:sqlserver://" + host + ":" + port + ";databaseName=" + bd + ";user=" + user + ";password=" + pass;
+    public String driver = "com.mysql.jdbc.Driver";
+    public String bd = "sql3339480";
+    public String host = "sql3.freesqldatabase.com";
+    public String port = "3306";
+    public String user = "sql3339480";
+    public String pass = "rpSgcK6fmM";
+    public String url = "jdbc:mysql://" + host + ":" + port + "/" + bd;
 
     public Connection conexion() {
+        System.out.println(url);
         Connection cn = null;
         try {
             Class.forName(driver);
-            cn = DriverManager.getConnection(url);
+            cn = DriverManager.getConnection(url,user,pass);
             if (cn.isValid(10000)) {
                 System.out.println("conectado");
             } else {

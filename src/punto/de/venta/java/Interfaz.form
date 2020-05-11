@@ -172,7 +172,7 @@
     <Component class="javax.swing.JLabel" name="fondoInterfaz">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Imagenes/Fondo.jpg"/>
+          <Image iconType="2" name="C:\Users\Asahel Oca&#xf1;o\Desktop\Desarrollo Web\Pr&#xe1;cticas\Punto-de-Venta\src\Imagenes\Fondo.jpg"/>
         </Property>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>

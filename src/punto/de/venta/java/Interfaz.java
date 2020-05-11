@@ -41,7 +41,7 @@ public class Interfaz extends javax.swing.JFrame {
         initComponents();
         //tabla.setBackground(Color.white);
         Fecha.start();
-        this.setResizable(false);
+//        this.setResizable(false);
         model = (DefaultTableModel) tabla.getModel();
 
     }
@@ -138,7 +138,7 @@ public class Interfaz extends javax.swing.JFrame {
         tot.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(tot, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 670, 70, 20));
 
-        fondoInterfaz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
+        fondoInterfaz.setIcon(new javax.swing.ImageIcon("C:\\Users\\Asahel Ocaño\\Desktop\\Desarrollo Web\\Prácticas\\Punto-de-Venta\\src\\Imagenes\\Fondo.jpg")); // NOI18N
         fondoInterfaz.setText("jLabel1");
         getContentPane().add(fondoInterfaz, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 4, 640, 760));
 
