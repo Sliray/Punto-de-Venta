@@ -37,13 +37,14 @@ public class Interfaz extends javax.swing.JFrame {
     conexion poss = new conexion();
     Connection conn = poss.conexion();
     ResultSet resultSet = null;
+    String pago = null;
     public Interfaz() {
         initComponents();
         //tabla.setBackground(Color.white);
         Fecha.start();
 //        this.setResizable(false);
         model = (DefaultTableModel) tabla.getModel();
-
+        Pagar.setBackground(Color.BLACK);
     }
 
     private static boolean isNumeric(String cadena) {
@@ -139,8 +140,14 @@ public class Interfaz extends javax.swing.JFrame {
         tot.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(tot, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 620, 70, 20));
 
-        Pagar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Pagar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Pagar.setForeground(new java.awt.Color(255, 51, 51));
         Pagar.setText("Pagar");
+        Pagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PagarActionPerformed(evt);
+            }
+        });
         getContentPane().add(Pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 660, 90, 30));
 
         fondoInterfaz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
@@ -270,6 +277,26 @@ public class Interfaz extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_EntradaKeyPressed
+
+    private void PagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PagarActionPerformed
+        // TODO add your handling code here:
+        int filas = model.getRowCount();
+        System.out.println("Tabla " + filas);
+         if (model.getRowCount()== 0) {
+                JOptionPane.showMessageDialog(null, "No ha realizado ninguna compra");
+            }else{
+             
+        for (int i = 0; i <filas; i++) {
+            System.out.println("i " + i);
+            model.removeRow(0);
+            Entrada.setText("");
+            tot.setText("");
+            
+        }
+        JOptionPane.showMessageDialog(null, "Se realizo el pago");
+       }
+        
+    }//GEN-LAST:event_PagarActionPerformed
 
     /**
      * @param args the command line arguments
