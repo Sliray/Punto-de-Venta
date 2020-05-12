@@ -81,6 +81,7 @@ public class Interfaz extends javax.swing.JFrame {
         Tot = new javax.swing.JLabel();
         Date = new javax.swing.JLabel();
         tot = new javax.swing.JLabel();
+        Pagar = new javax.swing.JButton();
         fondoInterfaz = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,18 +118,18 @@ public class Interfaz extends javax.swing.JFrame {
         tabla.setSelectionBackground(new java.awt.Color(255, 51, 51));
         jScrollPane1.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 72, 640, 585));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 640, 500));
 
         Entrada.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 EntradaKeyPressed(evt);
             }
         });
-        getContentPane().add(Entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 663, 385, 35));
+        getContentPane().add(Entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 385, 35));
 
         Tot.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Tot.setText("Total=");
-        getContentPane().add(Tot, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 670, 60, -1));
+        getContentPane().add(Tot, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 620, 60, -1));
 
         Date.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Date.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,9 +137,13 @@ public class Interfaz extends javax.swing.JFrame {
         getContentPane().add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, -1, -1));
 
         tot.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(tot, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 670, 70, 20));
+        getContentPane().add(tot, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 620, 70, 20));
 
-        fondoInterfaz.setIcon(new javax.swing.ImageIcon("C:\\Users\\Asahel Ocaño\\Desktop\\Desarrollo Web\\Prácticas\\Punto-de-Venta\\src\\Imagenes\\Fondo.jpg")); // NOI18N
+        Pagar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Pagar.setText("Pagar");
+        getContentPane().add(Pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 660, 90, 30));
+
+        fondoInterfaz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         fondoInterfaz.setText("jLabel1");
         getContentPane().add(fondoInterfaz, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 4, 640, 760));
 
@@ -315,6 +320,7 @@ public class Interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Date;
     private javax.swing.JTextField Entrada;
+    private javax.swing.JButton Pagar;
     private javax.swing.JLabel Titulo;
     private javax.swing.JLabel Tot;
     private javax.swing.JLabel fondoInterfaz;
