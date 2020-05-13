@@ -20,9 +20,7 @@ public class PuntoDeVentaJava {
         // TODO code application logic here
         
         Interfaz ventas = new Interfaz();
-        ventas.pack();
         ventas.setLocationRelativeTo(null);
-        ventas.setExtendedState(ventas.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         ventas.setVisible(true);
         
     }
